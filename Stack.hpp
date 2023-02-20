@@ -11,12 +11,16 @@
 /* ************************************************************************** */
 
 
+#ifndef STACK_HPP
+# define STACK_HPP
+
 #include <stack>
 #include <iterator>
 #include <vector>
 #include <type_traits>
 #include <algorithm>
-
+#include <type_traits>
+#include <map>
 
 namespace ft
 {
@@ -25,7 +29,6 @@ template < class T, class Container = std::vector<T> >
 class Stack
 {
 	public:
-	
 		typedef Container																	container_type;
 		typedef typename container_type::value_type				value_type;
 		typedef typename container_type::reference				reference;
@@ -43,12 +46,14 @@ class Stack
 		Stack(const Stack & cpy)
 			: c(cpy.c) {};
 		Stack & operator=(const Stack & src) {
+			if (this == &src)
+				return *this;
 			c = src.c;
 			return *this;
 		};
 		explicit Stack(const container_type & c)
 			: c(c) {};
-		~Stack() {};
+		virtual	~Stack() {};
 		
 		bool						empty(void) const { return c.empty();};
 		size_type				size(void) const { return c.size();};
@@ -91,3 +96,5 @@ class Stack
 
 
 }
+
+#endif
