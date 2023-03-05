@@ -14,17 +14,12 @@
 #ifndef STACK_HPP
 # define STACK_HPP
 
-#include <stack>
+#include "Vector.hpp"
 #include <iterator>
-#include <vector>
-#include <type_traits>
-#include <algorithm>
-#include <type_traits>
-#include <map>
 
 namespace ft
 {
-template < class T, class Container = std::vector<T> > 
+template < class T, class Container = ft::vector<T> > 
 class Stack
 {
 	public:
@@ -39,20 +34,17 @@ class Stack
 		container_type	c;
 
 	public:
-	
-		Stack(void)
-			: c() {};
-		Stack(const Stack & cpy)
-			: c(cpy.c) {};
+
+		explicit Stack(const container_type & c = container_type())
+			: c(c) {};
 		Stack & operator=(const Stack & src) {
 			if (this == &src)
 				return *this;
 			c = src.c;
 			return *this;
 		};
-		explicit Stack(const container_type & c)
-			: c(c) {};
 		virtual	~Stack() {};
+		
 		
 		bool						empty(void) const { return c.empty();};
 		size_type				size(void) const { return c.size();};

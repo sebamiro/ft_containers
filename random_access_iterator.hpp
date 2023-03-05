@@ -23,6 +23,7 @@ class random_access_iterator : ft::iterator<ft::random_access_iterator_tag, T>
 {
 	
 	public:
+		typedef T* iterator_type;
 		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::iterator_category	iterator_category;
 		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::value_type				value_type;
 		typedef typename ft::iterator<ft::random_access_iterator_tag, T>::difference_type		difference_type;

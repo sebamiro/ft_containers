@@ -75,9 +75,9 @@ namespace ft
          	return  cpy;
         };
         
-        reverse_iterator operator+(difference_type n) const { return current - n; };
+        reverse_iterator operator+(difference_type n) const { return reverse_iterator(current - n); };
         
-        reverse_iterator operator-(difference_type n) const { return current + n; };
+        reverse_iterator operator-(difference_type n) const { return reverse_iterator(current + n); };
         
         reverse_iterator & operator+=(difference_type n) {
         	current -= n;
