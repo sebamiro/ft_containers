@@ -13,7 +13,13 @@
 #ifndef UTILITY_HPP
 # define UTILITY_HPP
 
-#include "iterator_traits.hpp"
+#include "Iterator/iterator_traits.hpp"
+#include "Iterator/random_access_iterator.hpp"
+#include "Iterator/reverse_iterator.hpp"
+#include <iostream>
+#include <memory>
+#include <string>
+#include <stdexcept>
 #include <iostream>
 
 namespace ft
@@ -113,7 +119,7 @@ namespace ft
 	
 	template <class T1, class T2 >
 	bool	operator<(const pair<T1, T2> & lhs, const pair<T1, T2> & rhs)
-	{ return lhs.first < rhs.first || !(rhs.first < lhs.first) && lhs.second < rhs.second; };
+	{ return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second); };
 	
 	template <class T1, class T2 >
 	bool	operator<=(const pair<T1, T2> & lhs, const pair<T1, T2> & rhs)

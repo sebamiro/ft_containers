@@ -13,14 +13,7 @@
 #ifndef VECTOR_HPP
 # define  VECTOR_HPP
 
-#include <memory>
-#include <stdexcept>
-#include <string>
-#include "random_access_iterator.hpp"
-#include "reverse_iterator.hpp"
-#include "iterator_traits.hpp"
 #include "utility.hpp"
-#include <iostream>
 
 namespace ft
 {

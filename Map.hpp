@@ -13,15 +13,8 @@
 #ifndef MAP_HPP
 #define MAP_HPP
 
-#include <memory>
-#include <stdexcept>
-#include <string>
-#include "random_access_iterator.hpp"
-#include "reverse_iterator.hpp"
-#include "iterator_traits.hpp"
 #include "utility.hpp"
-#include "BST.hpp"
-#include <iostream>
+#include "BinarySearchTree/BST.hpp"
 
 namespace ft
 {
@@ -251,6 +244,10 @@ namespace ft
 				BST<value_type, key_compare>	bst;
 			
 	};
+	
+	template < class Key, class T, class Compare, class Alloc >
+	void	swap(map<Key, T, Compare, Alloc> & x, map<Key, T, Compare, Alloc> & y)
+			{ x.swap(y); };
 	
 }
 

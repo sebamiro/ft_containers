@@ -13,11 +13,9 @@
 #ifndef BST_HPP
 # define BST_HPP
 
-#include <memory>
 #include "node.hpp"
 #include "BST_iterator.hpp"
-#include "utility.hpp"
-#include "reverse_iterator.hpp"
+#include "../utility.hpp"
 
 #define RED true
 #define BLACK false
