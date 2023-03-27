@@ -15,53 +15,60 @@
 
 namespace ft
 {
-	enum	color {RED, BLACK};
 
-	template < typename T >
-	struct	Node
-	{
+enum	color {RED, BLACK};
 
-		typedef T		value_type;
+template <typename T>
+struct Node
+{
 
-		Node(void)
-			: value(), parent(nullptr), left(nullptr), right(nullptr), _color(RED) {};
+	typedef T	value_type;
 
-			Node(Node * parent = nullptr, Node * left = nullptr, Node * right = nullptr, ft::color color = RED)
-			: value(), parent(parent), left(left), right(right), _color(color) {};
+	Node(void)
+	: value(), parent(nullptr),
+		left(nullptr), right(nullptr), _color(RED) {};
 
-			Node(const value_type & val, Node * parent = nullptr, Node * left = nullptr, Node * right = nullptr, ft::color color = RED)
-			: value(val), parent(parent), left(left), right(right), _color(color) {};
+	Node(Node* parent = nullptr, Node* left = nullptr,
+			Node* right = nullptr, ft::color color = RED)
+	: value(), parent(parent),
+		left(left), right(right), _color(color) {};
 
-		Node(const Node & cpy)
-			: value(cpy.value), parent(cpy.parent), left(cpy.left), right(cpy.right), _color(cpy._color) {};
+	Node(const value_type& val, Node* parent = nullptr,
+			Node* left = nullptr, Node* right = nullptr, ft::color color = RED)
+	: value(val), parent(parent),
+		left(left), right(right), _color(color) {};
 
-		Node & operator=(const Node & src) {
+	Node(const Node& cpy)
+	: value(cpy.value), parent(cpy.parent),
+		left(cpy.left), right(cpy.right), _color(cpy._color) {};
 
-			if (*this == src)
-				return *this;
-			this->value = src.value;
-			this->parent = src.parent;
-			this->left = src.left;
-			this->right = src.right;
-			this->_color = src._color;
+	Node&
+	operator=(const Node& src) {
+		if (*this == src)
 			return *this;
-		}
 
-		virtual ~Node() {};
+		this->value = src.value;
+		this->parent = src.parent;
+		this->left = src.left;
+		this->right = src.right;
+		this->_color = src._color;
+		return *this;
+	}
 
-		bool	operator==(const Node & rhs)
-			{ return this->value == rhs.value; };
+	virtual ~Node() {};
 
-		void	setColor(ft::color color)
-		 { this->_color = color; };
+	bool
+	operator==(const Node& rhs)
+	{ return this->value == rhs.value; }
 
-		value_type	value;
-		Node * parent;
-		Node * left;
-		Node * right;
-		color _color;
+	value_type	value;
+	Node*		parent;
+	Node*		left;
+	Node*		right;
+	color		_color;
 
-	};
-}
+};
 
-#endif
+}//ft namespace
+
+#endif//NODE_HPP

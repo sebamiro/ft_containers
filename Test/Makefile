@@ -5,47 +5,98 @@
 #                                                     +:+ +:+         +:+      #
 #    By: smiro <smiro@student.42barcelona>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/12/06 13:00:11 by smiro             #+#    #+#              #
-#    Updated: 2023/03/05 16:20:11 by smiro            ###   ########.fr        #
+#    Created: 2022/11/11 15:23:29 by smiro             #+#    #+#              #
+#    Updated: 2023/03/20 17:16:23 by smiro            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
+################################################################################
+################################################################################
+
 NAME_STD	=	stdTest
 NAME_FT		=	ftTest
-MKFL		=	Makefile
 
-SRC			=	test.cpp utilsTest.cpp vector_test.cpp map_test.cpp stack_test.cpp
+INC			= inc/
+INC_HEADERS	= $(INC)defines.hpp
 
-OBJS		=	$(SRC:.cpp=.o)
+SRC_DIR		= src/
+OBJ_DIR		= obj/
 
-RM			=	rm -f
-CPP			=	c++
-CPPFLAGS	=	-Wall -Werror -Wextra -std=c++98
+CFLAGS		= -I $(INC) -MMD -Wall -Werror -Wextra -std=c++98
+RM			= rm -f
+CC			= c++
 
-%.o: %.cpp $(MKFL) defines.hpp
-	@$(CPP) $(CPPFLAGS) -c $< -o $@
+################################################################################
+### COLORS
+################################################################################
+
+DEL_LINE =		\033[2K
+ITALIC =		\033[3m
+BOLD =			\033[1m
+DEF_COLOR =		\033[0;39m
+GRAY =			\033[0;90m
+RED =			\033[0;91m
+GREEN =			\033[0;92m
+YELLOW =		\033[0;93m
+BLUE =			\033[0;94m
+MAGENTA =		\033[0;95m
+CYAN =			\033[0;96m
+WHITE =			\033[0;97m
+BLACK =			\033[0;99m
+ORANGE =		\033[38;5;209m
+BROWN =			\033[38;2;184;143;29m
+DARK_GRAY =		\033[38;5;234m
+MID_GRAY =		\033[38;5;245m
+DARK_GREEN =	\033[38;2;75;179;82m
+DARK_YELLOW =	\033[38;5;143m
+
+################################################################################
+################################################################################
+
+SRC_FILES	=	map_test.cpp \
+				stack_test.cpp \
+				test.cpp \
+				utilsTest.cpp \
+				vector_test.cpp
+
+SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
+OBJ 		=	$(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
+DEP			= 	$(addsuffix .d, $(basename $(OBJ)))
+B_OBJ		=	$(OBJ)
+
+################################################################################
+################################################################################
 
 all:
-	@$(MAKE) $(NAME_STD)
-	@$(MAKE) $(NAME_FT)
+			@$(MAKE) $(NAME_STD)
+			@$(MAKE) $(NAME_FT)
 
-$(NAME_STD): $(OBJS)
-	@$(CPP) $(OBJS) -o $(NAME_STD)
-	@echo DONE STD
+$(OBJ_DIR)%.o: %.cpp Makefile
+			@mkdir -p $(dir $@)
+			@printf "\r${ORANGE} | $(BROWN)COMPILING ${ORANGE}|  $(BLUE)< ${MAGENTA}$(notdir $(basename $<)) $(BLUE)> $(DEF_COLOR)%20c"
+			@$(CC) $(CFLAGS) -c $< -o $@
 
-$(NAME_FT): $(OBJS)
-	@$(CPP) $(OBJS) -DFT -o $(NAME_FT)
-	@echo DONE FT
+$(NAME_STD):	$(OBJ)
+			@$(CC) $(CFLAGS) $(OBJ) -o $@
+			@echo "\n\n$(BLUE)[$(ORANGE)============$(BLUE)<|$(ORANGE)DONE$(BLUE)|>$(ORANGE)============$(BLUE)] $(DEF_COLOR)"
+
+$(NAME_FT):	$(OBJ)
+			@$(CC) $(CFLAGS) -DFT $(OBJ) -o $@
+			@echo "\n\n$(BLUE)[$(ORANGE)============$(BLUE)<|$(ORANGE)DONE$(BLUE)|>$(ORANGE)============$(BLUE)] $(DEF_COLOR)"
+
+-include $(DEP)
 
 clean:
-	@$(RM) $(OBJS)
+			@$(RM) -r $(OBJ_DIR)
+			@echo "\n${RED}[$(MAGENTA)Objects removed successfully${RED}]$(DEF_COLOR)\n"
 
 fclean:
-	@$(MAKE) clean
-	@$(RM) $(NAME)
+			@$(MAKE) clean
+			@$(RM) $(NAME_STD) $(NAME_FT)
+			@echo "\n${RED}[$(MAGENTA)Everything removed successfully${RED}]$(DEF_COLOR)\n"
 
 re:
-	@$(MAKE) fclean
-	@$(MAKE)
+			@$(MAKE) fclean
+			@$(MAKE)
 
 .PHONY: all clean fclean re

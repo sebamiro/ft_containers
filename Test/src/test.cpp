@@ -19,7 +19,7 @@ static void	vector_test(void)
 	std::cout << "|===========        VECTOR        ===========|" << std::endl;
 	std::cout << "|============================================|" << std::endl;
 	std::cout << std::endl;
-	
+
 	v_constructorTest();
 	v_beginEndTest();
 	v_rbeginEndTest();
@@ -43,7 +43,7 @@ static void	map_test(void)
 	std::cout << "|===========          MAP         ===========|" << std::endl;
 	std::cout << "|============================================|" << std::endl;
 	std::cout << std::endl;
-	
+
 	m_constructorTest();
 	compareTests();
 	m_beginEndTest();
@@ -66,20 +66,19 @@ static void	stack_test(void)
 	std::cout << "|===========         STACK        ===========|" << std::endl;
 	std::cout << "|============================================|" << std::endl;
 	std::cout << std::endl;
-	
+
 	s_constructorTest();
 	s_pushPop();
 	s_topTest();
 	s_sizeEmptyTest();
 	s_operatorTest();
-	
+
 }
 
 int	main(void)
 {
 	stack_test();
-	
-	return 0;
 	vector_test();
 	map_test();
+	return 0;
 }
