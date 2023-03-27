@@ -257,6 +257,7 @@ namespace ft
 					insertRotations(node);
 			};
 
+
 			void	insertRotations(node_pointer node) {
 
 				if (node == node->parent->right
