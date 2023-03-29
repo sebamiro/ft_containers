@@ -16,7 +16,7 @@ void	s_constructorTest(void)
 {
 	std::cout << "{[>===========CONSTRUCTOR===========<]}" << std::endl;
 	std::deque<int> mydeque (3,100);
-  std::vector<int> myvector (2,200); 
+	std::vector<int> myvector (2,200);
 	g_start = timer();
 	stack<int, vector<int> >	stack1;
 	stack<int, std::deque<int> > stack2;

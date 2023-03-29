@@ -39,7 +39,7 @@ void	v_beginEndTest(void)
 	std::cout << "Second: " << (*++vec.begin()) << std::endl;
 	g_end = timer();
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
-	
+
 	std::cout << "{[>===========END===========<]}" << std::endl;
 	g_start = timer();
 	std::cout << "END - 1: " << (*--vec.end()) << std::endl;
@@ -57,7 +57,7 @@ void	v_rbeginEndTest(void)
 	std::cout << "Second: " << (*++vec.rbegin()) << std::endl;
 	g_end = timer();
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
-	
+
 	std::cout << "{[>===========REND===========<]}" << std::endl;
 	g_start = timer();
 	std::cout << "END - 1: " << (*--vec.rend()) << std::endl;
@@ -197,7 +197,7 @@ void	v_pushPopTest(void)
  	for (int i = 0; i < 11; i++)
 	{
 		vec.push_back(i * 42);
-		std::cout << "Back: " << vec.back();
+		std::cout << " Back: " << vec.back();
 	}
 	std::cout << std::endl;
 	std::cout << "Pushing 1000000" << std::endl;
@@ -208,7 +208,7 @@ void	v_pushPopTest(void)
 	std::cout << "Size: " << vec2.size() << " | Capacity: " << vec2.capacity() << std::endl;
 	std::cout << "First: " << vec2.front() << " | Last: " << vec2.back() << std::endl;
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
-	
+
 	std::cout << "{[>===========POP BACK===========<]}" << std::endl;
 	std::cout << "Poping 10" << std::endl;
 	g_start = timer();

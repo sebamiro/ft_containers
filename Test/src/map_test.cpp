@@ -50,7 +50,7 @@ void	compareTests(void)
 	m1.insert(make_pair(11, 3));
 	std::cout << "Default: ";
 	for (std::map<int, int>::iterator it = m1.begin(); it != m1.end(); it++) { std::cout << (*it).first << " "; };
- 	std::cout << std::endl; 
+ 	std::cout << std::endl;
   map<int, int, std::multiplies<int> >	m2;
 	m2.insert(make_pair(16, 3));
 	m2.insert(make_pair(8, 3));
@@ -63,7 +63,7 @@ void	compareTests(void)
 	m2.insert(make_pair(11, 3));
 	std::cout << "Multiples: ";
 	for (std::map<int, int>::iterator it = m2.begin(); it != m2.end(); it++) { std::cout << (*it).first << " "; };
-  std::cout << std::endl; 
+  std::cout << std::endl;
   map<int, int, std::bit_xor<int> >	m3;
 	m3.insert(make_pair(16, 3));
 	m3.insert(make_pair(8, 3));
@@ -76,7 +76,7 @@ void	compareTests(void)
 	m3.insert(make_pair(11, 3));
 	std::cout << "Bit Xor: ";
 	for (std::map<int, int>::iterator it = m3.begin(); it != m3.end(); it++) { std::cout << (*it).first << " "; };
-  std::cout << std::endl; 
+  std::cout << std::endl;
   g_end = timer();
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
 }
@@ -167,7 +167,7 @@ void	m_eraseTest(void)
 	map<int, int>	m;
 	for (int i = 0; i < 500000; i++)
 		m.insert(make_pair(i, 42));
-	g_start = timer();	
+	g_start = timer();
 	std::cout << "Initial size: " << m.size() << " End: " << (*--m.end()).first  << " - " << (*--m.end()).second << std::endl;
 	m.erase(499999);
 	std::cout << "Erase by key: size: " << m.size() << " End: " << (*--m.end()).first  << " - " << (*--m.end()).second << std::endl;
@@ -213,7 +213,7 @@ void	m_countFindTest(void)
 	map<int, int>	m;
 	for (int i = 0; i < 1500000; i++)
 		m.insert(make_pair(i, 42));
-	g_start = timer();	
+	g_start = timer();
 	std::cout << "Count |0|: " << m.count(0) << std::endl;
 	std::cout << "Count |42|: " << m.count(42) << std::endl;
 	std::cout << "Count |-2|: " << m.count(-2) << std::endl;
@@ -221,7 +221,7 @@ void	m_countFindTest(void)
 	g_end = timer();
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
 	std::cout << "{[>===========FIND===========<]}" << std::endl;
-	g_start = timer();	
+	g_start = timer();
 	std::cout << "Find |0|: " << (*m.find(0)).first << " - " <<(*m.find(0)).second << std::endl;
 	std::cout << "Find |42|: " << (*m.find(42)).first << " - " <<(*m.find(42)).second << std::endl;
 	std::cout << "Find |-2|: " << (*m.find(-2)).first << " - " <<(*m.find(-2)).second << std::endl;
@@ -266,7 +266,7 @@ void	m_beginEndTest(void)
 	std::cout << "Second: " << (*++m.begin()).first << " - " << (*++m.begin()).second << std::endl;
 	g_end = timer();
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
-	
+
 	std::cout << "{[>===========END===========<]}" << std::endl;
 	g_start = timer();
 	std::cout << "END - 1: " << (*--m.end()).first << " - " << (*--m.end()).second << std::endl;
@@ -286,7 +286,7 @@ void	m_rbeginEndTest(void)
 	std::cout << "Second: " << (*++m.rbegin()).first << " - " << (*++m.rbegin()).second << std::endl;
 	g_end = timer();
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
-	
+
 	std::cout << "{[>===========REND===========<]}" << std::endl;
 	g_start = timer();
 	std::cout << "END - 1: " << (*--m.rend()).first << " - " << (*--m.rend()).second << std::endl;
@@ -304,7 +304,7 @@ void	m_keyCompareTest(void)
 	std::cout << "Compare: 1-2 = " << comp(1, 2) << " | 42-42 = " << comp(42, 42) << std::endl;
 	g_end = timer();
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
-	
+
 	std::cout << "{[>===========VALUE COMP===========<]}" << std::endl;
 	map<int, int>::value_compare comp2 = m.value_comp();
 	g_start = timer();

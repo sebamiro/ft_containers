@@ -77,9 +77,9 @@ static void	stack_test(void)
 
 int	main(void)
 {
+	vector_test();
+	map_test();
 	stack_test();
 	
 	return 0;
-	vector_test();
-	map_test();
 }
