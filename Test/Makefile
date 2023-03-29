@@ -6,23 +6,24 @@
 #    By: smiro <smiro@student.42barcelona>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/11/11 15:23:29 by smiro             #+#    #+#              #
-#    Updated: 2022/11/11 15:34:44 by smiro            ###   ########.fr        #
+#    Updated: 2023/03/20 17:16:23 by smiro            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-################################################################################
-################################################################################
+MAKE		=	make --no-print-directory
 
-NAME_STD	= stdTest
-NAME_FT		= ftTest
-INC			= -I ./inc/ -I ../
+NAME_STD	=	stdTest
+NAME_FT		=	ftTest
+
+INC			= inc/
+INC_HEADERS	= $(INC)defines.hpp
 
 SRC_DIR		= src/
 OBJ_DIR		= obj/
 
-CFLAGS		= -MMD -Wall -Werror -Wextra -std=c++98
+CFLAGS		= -I $(INC) -MMD -Wall -Werror -Wextra -std=c++98
 RM			= rm -f
-CC			= c++ $(INC)
+CC			= c++
 
 ################################################################################
 ### COLORS
@@ -53,9 +54,9 @@ DARK_YELLOW =	\033[38;5;143m
 
 SRC_FILES	=	map_test.cpp \
 				stack_test.cpp \
-				vector_test.cpp \
+				test.cpp \
 				utilsTest.cpp \
-				test.cpp
+				vector_test.cpp
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ 		=	$(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
@@ -72,16 +73,15 @@ all:
 $(OBJ_DIR)%.o: %.cpp Makefile
 			@mkdir -p $(dir $@)
 			@printf "\r${ORANGE} | $(BROWN)COMPILING ${ORANGE}|  $(BLUE)< ${MAGENTA}$(notdir $(basename $<)) $(BLUE)> $(DEF_COLOR)%20c"
-			@$(CC) -c $< -o $@
+			@$(CC) $(CFLAGS) -c $< -o $@
 
 $(NAME_STD):	$(OBJ)
 			@$(CC) $(CFLAGS) $(OBJ) -o $@
-			@$(CC) $(CFLAGS) $(OBJ) -DFT -o $@
-			@echo "\n\n$(BLUE)[$(ORANGE)============$(BLUE)<|$(ORANGE)$@$(BLUE)|>$(ORANGE)============$(BLUE)] $(DEF_COLOR)"
+			@echo "\n\n$(BLUE)[$(ORANGE)============$(BLUE)<|$(ORANGE)DONE$(BLUE)|>$(ORANGE)============$(BLUE)] $(DEF_COLOR)"
 
 $(NAME_FT):	$(OBJ)
-			@$(CC) $(CFLAGS) $(OBJ) -DFT -o $@
-			@echo "\n\n$(BLUE)[$(ORANGE)============$(BLUE)<|$(ORANGE)$@$(BLUE)|>$(ORANGE)============$(BLUE)] $(DEF_COLOR)"
+			@$(CC) $(CFLAGS) -DFT $(OBJ) -o $@
+			@echo "\n\n$(BLUE)[$(ORANGE)============$(BLUE)<|$(ORANGE)DONE$(BLUE)|>$(ORANGE)============$(BLUE)] $(DEF_COLOR)"
 
 -include $(DEP)
 
@@ -91,8 +91,7 @@ clean:
 
 fclean:
 			@$(MAKE) clean
-			@$(RM) $(NAME_STD)
-			@$(RM) $(NAME_FT)
+			@$(RM) $(NAME_STD) $(NAME_FT)
 			@echo "\n${RED}[$(MAGENTA)Everything removed successfully${RED}]$(DEF_COLOR)\n"
 
 re:
