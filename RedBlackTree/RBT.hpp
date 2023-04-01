@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BST.hpp                                            :+:      :+:    :+:   */
+/*   RBT.hpp                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smiro <smiro@student.42barcelona>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,11 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BST_HPP
-# define BST_HPP
+#ifndef RBT_HPP
+# define RBT_HPP
 
 #include "node.hpp"
-#include "BST_iterator.hpp"
+#include "RBT_iterator.hpp"
 #include "../utility.hpp"
 #include <iostream>
 
@@ -23,7 +23,7 @@ namespace ft
 
 template < class T, class Compare = ft::less<T>,
 			class Allocator = std::allocator<ft::Node<T> > >
-class	BST
+class	RBT
 {
 
 public:
@@ -32,30 +32,30 @@ public:
 	typedef ft::Node<T>						node_type;
 	typedef node_type *						node_pointer;
 	typedef Allocator						node_alloc;
-	typedef ft::BST_iterator<ft::Node<T> >	iterator;
-	typedef ft::BST_iterator<ft::Node<T> >	const_iterator;
+	typedef ft::RBT_iterator<ft::Node<T> >	iterator;
+	typedef ft::RBT_iterator<ft::Node<T> >	const_iterator;
 	typedef size_t							size_type;
 
 
-	BST(const node_alloc& alloc = node_alloc())
+	RBT(const node_alloc& alloc = node_alloc())
 	: _node_alloc(alloc), _size() {
 		sentinel_node = _node_alloc.allocate(1);
 		_node_alloc.construct(sentinel_node, node_type(sentinel_node, sentinel_node, sentinel_node, BLACK));
 	}
 
-	BST(const BST& cpy)
+	RBT(const RBT& cpy)
 	: _node_alloc(cpy._node_alloc), sentinel_node(cpy.sentinel_node),
 		comp(cpy.comp), _size(cpy._size) {}
 
-	BST&
-	operator=(const BST& src) {
+	RBT&
+	operator=(const RBT& src) {
 		_node_alloc = src._node_alloc;
 		comp = src.comp;
 		sentinel_node = src.sentinel_node;
 		_size = src._size;
 	}
 
-	~BST(void) {
+	~RBT(void) {
 		_node_alloc.destroy(sentinel_node);
 		_node_alloc.deallocate(sentinel_node, 1);
 	}
@@ -108,7 +108,7 @@ public:
 	{ return searchFrom(value, sentinel_node->parent); }
 
 	void
-	swap(BST& x) {
+	swap(RBT& x) {
 		node_pointer	temp = x.sentinel_node;
 		Compare			temp_comp = x.comp;
 		size_type		temp_size = x._size;
@@ -428,4 +428,4 @@ private:
 
 }//ft namespace
 
-#endif//BST_HPP
+#endif//RBT_HPP

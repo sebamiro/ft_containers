@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   BST_iterator.hpp                                   :+:      :+:    :+:   */
+/*   RBT_iterator.hpp                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: smiro <smiro@student.42barcelona>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef BST_ITERATOR_HPP
-#define BST_ITERATOR_HPP
+#ifndef RBT_ITERATOR_HPP
+#define RBT_ITERATOR_HPP
 
 #include "../utility.hpp"
 
@@ -19,7 +19,7 @@ namespace ft
 {
 
 template  <typename  T>
-class BST_iterator : ft::iterator<ft::bidirectional_iterator_tag, T>
+class RBT_iterator : ft::iterator<ft::bidirectional_iterator_tag, T>
 {
 
 public:
@@ -30,19 +30,19 @@ public:
 	typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::pointer				pointer;
 	typedef typename ft::iterator<ft::bidirectional_iterator_tag, value_type>::reference			reference;
 
-	BST_iterator(void)
+	RBT_iterator(void)
 	: node(), sentinel() {};
 
-	BST_iterator(T* node, T* sentinel)
+	RBT_iterator(T* node, T* sentinel)
 	: node(node), sentinel(sentinel) {};
 
-	BST_iterator(const BST_iterator& cpy)
+	RBT_iterator(const RBT_iterator& cpy)
 	: node(cpy.node), sentinel(cpy.sentinel) {};
 
-	virtual ~BST_iterator(void) {};
+	virtual ~RBT_iterator(void) {};
 
-	BST_iterator&
-	operator=(const BST_iterator& src) {
+	RBT_iterator&
+	operator=(const RBT_iterator& src) {
 		if (*this == src)
 			return *this;
 
@@ -52,11 +52,11 @@ public:
 	}
 
 	bool
-	operator==(const BST_iterator& rhs)
+	operator==(const RBT_iterator& rhs)
 	{ return this->node == rhs.node; }
 
 	bool
-	operator!=(const BST_iterator& rhs)
+	operator!=(const RBT_iterator& rhs)
 	{ return this->node != rhs.node; }
 
 	reference
@@ -67,7 +67,7 @@ public:
 	operator->(void) const
 	{ return &this->node->value; }
 
-	BST_iterator&
+	RBT_iterator&
 	operator++(void) {
 		if (this->node == this->sentinel->right)
 			this->node = sentinel;
@@ -89,15 +89,15 @@ public:
 		return *this;
 	}
 
-	BST_iterator
+	RBT_iterator
 	operator++(int) {
-		BST_iterator temp(*this);
+		RBT_iterator temp(*this);
 
 		operator++();
 		return temp;
 	}
 
-	BST_iterator&
+	RBT_iterator&
 	operator--(void) {
 		if (this->node == this->sentinel)
 			this->node = this->sentinel->right;
@@ -119,8 +119,8 @@ public:
 		return *this;
 	}
 
-	BST_iterator operator--(int) {
-		BST_iterator temp(*this);
+	RBT_iterator operator--(int) {
+		RBT_iterator temp(*this);
 
 		operator--();
 		return temp;
@@ -135,4 +135,4 @@ private:
 
 }//ft namespace
 
-#endif//BST_ITERATOR_HPP
+#endif//RBT_ITERATOR_HPP

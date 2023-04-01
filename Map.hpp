@@ -14,7 +14,7 @@
 # define MAP_HPP
 
 #include "utility.hpp"
-#include "BinarySearchTree/BST.hpp"
+#include "RedBlackTree/RBT.hpp"
 
 namespace ft
 {
@@ -37,8 +37,8 @@ public:
 	typedef typename allocator_type::const_pointer			const_pointer;
 	typedef typename allocator_type::size_type				size_type;
 	typedef typename allocator_type::difference_type		difference_type;
-	typedef typename ft::BST<value_type>::iterator			iterator;
-	typedef typename ft::BST<value_type>::const_iterator	const_iterator;
+	typedef typename ft::RBT<value_type>::iterator			iterator;
+	typedef typename ft::RBT<value_type>::const_iterator	const_iterator;
 	typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
 	typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
@@ -61,18 +61,18 @@ public:
 
 	explicit map(const key_compare& comp = key_compare(),
 					const allocator_type& alloc = allocator_type())
-	: alloc(alloc), comp(comp), bst() {};
+	: alloc(alloc), comp(comp), rbt() {};
 
 	template < class InputIterator>
 	map (InputIterator first, InputIterator last,
 			const allocator_type& alloc = allocator_type(),
 			const key_compare& comp = key_compare(),
 			typename ft::enable_if<!ft::is_integral_type<InputIterator>::value, InputIterator>::type* = 0)
-	: alloc(alloc), comp(comp), bst()
+	: alloc(alloc), comp(comp), rbt()
 	{	this->insert(first, last); };
 
 	map(const map& cpy)
-	: alloc(cpy.alloc), comp(cpy.comp), bst()
+	: alloc(cpy.alloc), comp(cpy.comp), rbt()
 	{ this->insert(cpy.begin(), cpy.end()); };
 
 	~map(void) { this->clear(); };
@@ -103,19 +103,19 @@ public:
 
 	iterator
 	begin(void)
-	{ return iterator(bst.left(), bst.base()); }
+	{ return iterator(rbt.left(), rbt.base()); }
 
 	const_iterator
 	begin(void) const
-	{ return iterator(bst.left(), bst.base()); }
+	{ return iterator(rbt.left(), rbt.base()); }
 
 	iterator
 	end(void)
-	{ return iterator(bst.base(), bst.base()); }
+	{ return iterator(rbt.base(), rbt.base()); }
 
 	const_iterator
 	end(void) const
-	{ return iterator(bst.base(), bst.base()); }
+	{ return iterator(rbt.base(), rbt.base()); }
 
 	reverse_iterator
 	rbegin(void)
@@ -135,15 +135,15 @@ public:
 
 	bool
 	empty(void) const
-	{ return bst.root() == bst.base(); }
+	{ return rbt.root() == rbt.base(); }
 
 	size_type
 	size(void) const
-	{ return bst.size(); }
+	{ return rbt.size(); }
 
 	size_type
 	max_size(void) const
-	{	return bst.max_size(); }
+	{	return rbt.max_size(); }
 
 	mapped_type&
 	operator[](const key_type& key)
@@ -151,12 +151,12 @@ public:
 
 	ft::pair<iterator, bool>
 	insert(const value_type& val)
-	{ return bst.insert_pair(val); }
+	{ return rbt.insert_pair(val); }
 
 	iterator
 	insert(iterator position, const value_type& val) {
 		(void)position;
-		return bst.insert_pair(val).first;
+		return rbt.insert_pair(val).first;
 	}
 
 	template < class InputIterator>
@@ -181,7 +181,7 @@ public:
 	erase(const key_type& k) {
 		if (this->find(k) == this->end())
 			return 0;
-		bst.removeByKey(ft::make_pair(k, mapped_type()));
+		rbt.removeByKey(ft::make_pair(k, mapped_type()));
 		return 1;
 	}
 
@@ -195,7 +195,7 @@ public:
 	swap(map& m) {
 		if (this ==&m)
 			return ;
-		bst.swap(m.bst);
+		rbt.swap(m.rbt);
 	}
 
 	allocator_type
@@ -212,11 +212,11 @@ public:
 
 	iterator
 	find(const key_type& key)
-	{ return iterator(bst.searchByKey(ft::make_pair(key, mapped_type())), bst.base()); }
+	{ return iterator(rbt.searchByKey(ft::make_pair(key, mapped_type())), rbt.base()); }
 
 	const_iterator
 	find(const key_type& key) const
-	{ return const_iterator(bst.searchByKey(ft::make_pair(key, mapped_type())), bst.base()); }
+	{ return const_iterator(rbt.searchByKey(ft::make_pair(key, mapped_type())), rbt.base()); }
 
 	size_type
 	count(const key_type& key) const {
@@ -271,7 +271,7 @@ private:
 
 	allocator_type					alloc;
 	Compare							comp;
-	BST<value_type, key_compare>	bst;
+	RBT<value_type, key_compare>	rbt;
 
 };
 
