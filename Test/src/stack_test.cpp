@@ -12,7 +12,7 @@
 
 #include "defines.hpp"
 
-void	s_constructorTest(void)
+void	st_constructorTest(void)
 {
 	std::cout << "{[>===========CONSTRUCTOR===========<]}" << std::endl;
 	std::deque<int> mydeque (3,100);
@@ -32,7 +32,7 @@ void	s_constructorTest(void)
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
 }
 
-void	s_pushPop(void)
+void	st_pushPop(void)
 {
 	std::cout << "{[>===========PUSH===========<]}" << std::endl;
 	stack<int, vector<int> > s;
@@ -59,7 +59,7 @@ void	s_pushPop(void)
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
 }
 
-void	s_topTest(void)
+void	st_topTest(void)
 {
 	std::cout << "{[>===========TOP===========<]}" << std::endl;
 	g_start = timer();
@@ -74,7 +74,7 @@ void	s_topTest(void)
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
 }
 
-void	s_sizeEmptyTest(void)
+void	st_sizeEmptyTest(void)
 {
 	std::cout << "{[>===========SIZE===========<]}" << std::endl;
 	stack<int> s;
@@ -92,7 +92,7 @@ void	s_sizeEmptyTest(void)
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
 }
 
-void	s_operatorTest(void)
+void	st_operatorTest(void)
 {
 	std::cout << "{[>===========OPERATORS===========<]}" << std::endl;
 	stack<int>	s;
