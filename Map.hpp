@@ -37,6 +37,7 @@ public:
 	typedef typename allocator_type::const_pointer			const_pointer;
 	typedef typename allocator_type::size_type				size_type;
 	typedef typename allocator_type::difference_type		difference_type;
+
 	typedef typename ft::RBT<value_type>::iterator			iterator;
 	typedef typename ft::RBT<value_type>::const_iterator	const_iterator;
 	typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
@@ -47,35 +48,36 @@ public:
 	{
 		friend class map;
 
-		protected:
+	protected:
 
-			key_compare comp;
+		key_compare comp;
 
-			value_compare(key_compare c) : comp(c) {};
+		value_compare(key_compare c) : comp(c) {};
 
-		public:
-			bool	operator()(const value_type& x, const value_type& y) const
-			{ return comp(x.first, y.first); };
+	public:
+
+		bool	operator()(const value_type& x, const value_type& y) const
+		{ return comp(x.first, y.first); };
 	};
-
 
 	explicit map(const key_compare& comp = key_compare(),
 					const allocator_type& alloc = allocator_type())
-	: alloc(alloc), comp(comp), rbt() {};
+	: alloc(alloc), comp(comp), rbt() {}
 
-	template < class InputIterator>
-	map (InputIterator first, InputIterator last,
-			const allocator_type& alloc = allocator_type(),
-			const key_compare& comp = key_compare(),
-			typename ft::enable_if<!ft::is_integral_type<InputIterator>::value, InputIterator>::type* = 0)
+	template <class InputIterator>
+	map(InputIterator first, InputIterator last,
+		const allocator_type& alloc = allocator_type(),
+		const key_compare& comp = key_compare(),
+		typename ft::enable_if<!ft::is_integral_type<InputIterator>::value, InputIterator>::type* = 0)
 	: alloc(alloc), comp(comp), rbt()
-	{	this->insert(first, last); };
+	{	this->insert(first, last); }
 
 	map(const map& cpy)
 	: alloc(cpy.alloc), comp(cpy.comp), rbt()
-	{ this->insert(cpy.begin(), cpy.end()); };
+	{ this->insert(cpy.begin(), cpy.end()); }
 
-	~map(void) { this->clear(); };
+	~map(void)
+	{ this->clear(); }
 
 	map&
 	operator=(const map& src) {
@@ -143,7 +145,7 @@ public:
 
 	size_type
 	max_size(void) const
-	{	return rbt.max_size(); }
+	{ return rbt.max_size(); }
 
 	mapped_type&
 	operator[](const key_type& key)
@@ -193,8 +195,9 @@ public:
 
 	void
 	swap(map& m) {
-		if (this ==&m)
+		if (this == &m)
 			return ;
+
 		rbt.swap(m.rbt);
 	}
 
@@ -224,7 +227,7 @@ public:
 		iterator	last = this->end();
 
 		for (; first != last; first++)
-			if (comp((*first).first, key) == false&& comp(key, (*first).first) == false)
+			if (comp((*first).first, key) == false && comp(key, (*first).first) == false)
 				return 1;
 		return 0;
 	}
@@ -261,11 +264,11 @@ public:
 
 	ft::pair<iterator, iterator>
 	equal_range(const key_type& key)
-	{ return ft::make_pair(this->lower_bound(key), this->upper_bound(key)); };
+	{ return ft::make_pair(this->lower_bound(key), this->upper_bound(key)); }
 
 	ft::pair<const_iterator, const_iterator>
 	equal_range(const key_type& key) const
-	{ return ft::make_pair(this->lower_bound(key), this->upper_bound(key)); };
+	{ return ft::make_pair(this->lower_bound(key), this->upper_bound(key)); }
 
 private:
 
