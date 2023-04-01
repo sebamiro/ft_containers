@@ -16,6 +16,7 @@
 #include "node.hpp"
 #include "BST_iterator.hpp"
 #include "../utility.hpp"
+#include <iostream>
 
 namespace ft
 {
@@ -99,18 +100,7 @@ public:
 
 	void
 	removeByKey(value_type value) {
-		node_pointer	node = searchByKey(value);
-
-		if (node->left != sentinel_node && node->right != sentinel_node) {
-			node_pointer reminder = getHigher(node->left);
-			node_type	temp(reminder->value, node->parent, node->left, node->right);
-
-			_node_alloc.destroy(node);
-			_node_alloc.construct(node, temp);
-			removeFrom(reminder->value, reminder);
-		}
-		else
-			removeFrom(value, sentinel_node->parent);
+		removeNode(searchByKey(value));
 	}
 
 	node_pointer
@@ -158,8 +148,29 @@ public:
 private:
 
 	void
-	removeFrom(value_type value, node_pointer root) {
-		node_pointer	node = searchFrom(value, root);
+	removeNode(node_pointer node) {
+		node_pointer	replace;
+
+		if (node == sentinel_node)
+			return;
+		if (node->left != sentinel_node)
+			replace = getHigher(node->left);
+		else
+			replace = node->right;
+
+		if (replace == sentinel_node)
+			deleteLeaf(node);
+		else if (node->left == sentinel_node || node->right == sentinel_node)
+			deleteOneChild(node, replace);
+		else {
+			_node_alloc.destroy(node);
+			_node_alloc.construct(node, node_type(replace->value, node->parent, node->left, node->right, node->_color));
+			removeNode(replace);
+		}
+	}
+
+	void
+	deleteLeaf(node_pointer node) {
 		node_pointer	next_node;
 
 		if (node->left != sentinel_node)
@@ -168,19 +179,117 @@ private:
 			next_node = node->right;
 
 		if (node->parent == sentinel_node)
-			sentinel_node->parent = next_node;
+			sentinel_node->parent = sentinel_node;
 		else if (node->parent->left == node)
 			node->parent->left = next_node;
 		else
 			node->parent->right = next_node;
 
-		if (next_node != sentinel_node)
-			next_node->parent = node->parent;
+		if (node->parent != sentinel_node && node->_color == BLACK)
+			fixDB(node);
+		else if (node->parent != sentinel_node && sibiling(node) != sentinel_node)
+			sibiling(node)->_color = RED;
+
 		sentinel_node->left = getLower(sentinel_node->parent);
 		sentinel_node->right = getHigher(sentinel_node->parent);
 		_size -= 1;
 		_node_alloc.destroy(node);
 		_node_alloc.deallocate(node, 1);
+	}
+
+	void
+	deleteOneChild(node_pointer node, node_pointer replace) {
+		bool bothBlack = (node->_color == BLACK && replace->_color == BLACK);
+
+		if (node == sentinel_node->parent) {
+			sentinel_node->parent = replace;
+			sentinel_node->left = getLower(sentinel_node->parent);
+			sentinel_node->right = getHigher(sentinel_node->parent);
+			replace->parent = sentinel_node;
+			_size -= 1;
+			_node_alloc.destroy(node);
+			_node_alloc.deallocate(node, 1);
+			return ;
+		}
+		replaceNode(node, replace);
+		sentinel_node->left = getLower(sentinel_node->parent);
+		sentinel_node->right = getHigher(sentinel_node->parent);
+		_size -= 1;
+		_node_alloc.destroy(node);
+		_node_alloc.deallocate(node, 1);
+		if (bothBlack)
+			fixDB(replace);
+		else
+			replace->_color = BLACK;
+	}
+
+	void
+	fixDB(node_pointer node) {
+		if (node == sentinel_node->parent)
+			return ;
+		if (sibiling(node) == sentinel_node)
+			return fixDB(node->parent);
+
+		if (sibiling(node)->_color == RED) {
+			node->parent->_color = RED;
+			sibiling(node)->_color = BLACK;
+			if (node->parent->right == sibiling(node))
+				rotateLeft(node->parent);
+			else
+				rotateRight(node->parent);
+			fixDB(node);
+		}
+		else if (sibiling(node)->right->_color == BLACK && sibiling(node)->left->_color == BLACK) {
+			sibiling(node)->_color = RED;
+			if (node->parent->_color == BLACK)
+				fixDB(node->parent);
+			else
+				node->parent->_color = BLACK;
+		}
+		else
+			fixDoubleRedChild(sibiling(node));
+	}
+
+	void
+	fixDoubleRedChild(node_pointer node) {
+		node_pointer	parent = node->parent;
+		node_pointer	next_node;
+
+
+		if (sibiling(node) == sentinel_node)
+			next_node = sentinel_node;
+		else if (sibiling(node)->left != sentinel_node)
+			next_node = sibiling(node)->left;
+		else
+			next_node = sibiling(node)->right;
+		if (node->right->_color == RED) {
+			if (parent->left == node) {
+				node->right->_color = parent->_color;
+				// parent->right = next_node;
+				rotateLeft(node);
+				rotateRight(parent);
+			}
+			else {
+				node->right->_color = node->_color;
+				node->_color = parent->_color;
+				rotateLeft(parent);
+			}
+		}
+		else {
+			if (parent->left == node) {
+				node->left->_color = node->_color;
+				node->_color = parent->_color;
+				parent->right = next_node;
+				rotateRight(parent);
+			}
+			else {
+				node->left->_color = parent->_color;
+				// parent->left = next_node;
+				rotateRight(node);
+				rotateLeft(parent);
+			}
+		}
+		parent->_color = BLACK;
 	}
 
 	node_pointer
@@ -221,9 +330,11 @@ private:
 	sibiling(node_pointer node) {
 		if (node->parent == sentinel_node)
 			return sentinel_node;
-		if (node->parent->left == node)
+		if (node->parent->right == node)
+			return node->parent->left;
+		else if (node->parent->left == node)
 			return node->parent->right;
-		return node->parent->left;
+		return node->parent->left != sentinel_node ? node->parent->left : node->parent->right;
 	}
 
 	node_pointer
@@ -253,7 +364,7 @@ private:
 
 		replaceNode(node, temp);
 		node->right = temp->left;
-		if (node->left != sentinel_node)
+		if (temp->left != sentinel_node)
 			temp->left->parent = node;
 		temp->left = node;
 		node->parent = temp;
@@ -265,7 +376,7 @@ private:
 
 		replaceNode(node, temp);
 		node->left = temp->right;
-		if (node->right != sentinel_node)
+		if (temp->right != sentinel_node)
 			temp->right->parent = node;
 		temp->right = node;
 		node->parent = temp;

@@ -67,6 +67,10 @@ public:
 	operator->(void) const
 	{ return &this->node->value; }
 
+	T&
+	operator-(void)
+	{ return *this->node; }
+
 	BST_iterator&
 	operator++(void) {
 		if (this->node == this->sentinel->right)
