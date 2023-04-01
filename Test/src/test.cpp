@@ -59,6 +59,29 @@ static void	map_test(void)
 	m_operatorTest();
 }
 
+static void	set_test(void)
+{
+	std::cout << std::endl;
+	std::cout << "|============================================|" << std::endl;
+	std::cout << "|===========          SET         ===========|" << std::endl;
+	std::cout << "|============================================|" << std::endl;
+	std::cout << std::endl;
+
+	s_constructorTest();
+	s_compareTests();
+	s_beginEndTest();
+	s_rbeginEndTest();
+	s_insertTest();
+	s_sizeTest();
+	s_eraseTest();
+	s_swapTest();
+	s_countFindTest();
+	s_lowerUpperEqualTest();
+	s_keyCompareTest();
+	s_operatorTest();
+}
+
+
 static void	stack_test(void)
 {
 	std::cout << std::endl;
@@ -67,18 +90,19 @@ static void	stack_test(void)
 	std::cout << "|============================================|" << std::endl;
 	std::cout << std::endl;
 
-	s_constructorTest();
-	s_pushPop();
-	s_topTest();
-	s_sizeEmptyTest();
-	s_operatorTest();
+	st_constructorTest();
+	st_pushPop();
+	st_topTest();
+	st_sizeEmptyTest();
+	st_operatorTest();
 
 }
 
 int	main(void)
 {
+	set_test();
+	return 0;
 	vector_test();
 	map_test();
 	stack_test();
-	return 0;
 }

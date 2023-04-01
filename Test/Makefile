@@ -56,7 +56,8 @@ SRC_FILES	=	map_test.cpp \
 				stack_test.cpp \
 				test.cpp \
 				utilsTest.cpp \
-				vector_test.cpp
+				vector_test.cpp \
+				set_test.cpp
 
 SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
 OBJ 		=	$(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))

@@ -67,11 +67,11 @@ public:
 		bool			side = true;
 
 		while (start != sentinel_node) {
-			if (start->value.first == value.first)
+			if (start->value == value)
 				return (ft::make_pair(iterator(start, sentinel_node), false));
 
 			prev = start;
-			if (comp(value.first, start->value.first) == false) {
+			if (comp(value, start->value) == false) {
 				side = true;
 				start = start->right;
 			}
@@ -295,9 +295,9 @@ private:
 	node_pointer
 	searchFrom(const value_type value, node_pointer root) {
 		while (root != sentinel_node) {
-			if (root->value.first == value.first)
+			if (root->value == value)
 				return root;
-			if (comp(value.first, root->value.first))
+			if (comp(value, root->value))
 				root = root->left;
 			else
 				root = root->right;

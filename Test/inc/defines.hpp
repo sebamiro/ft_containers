@@ -16,8 +16,10 @@
 #include "../../Vector.hpp"
 #include "../../Map.hpp"
 #include "../../Stack.hpp"
+#include "../../Set.hpp"
 #include "../../utility.hpp"
 #include <vector>
+#include <set>
 #include <map>
 #include <stack>
 #include <iostream>
@@ -67,11 +69,24 @@ void	m_keyCompareTest(void);
 void	m_operatorTest(void);
 
 //STACK
-void	s_constructorTest(void);
-void	s_pushPop(void);
-void	s_topTest(void);
-void	s_sizeEmptyTest(void);
-void	s_operatorTest(void);
+void	st_constructorTest(void);
+void	st_pushPop(void);
+void	st_topTest(void);
+void	st_sizeEmptyTest(void);
+void	st_operatorTest(void);
 
+//SET
+void	s_constructorTest(void);
+void	s_compareTests(void);
+void	s_beginEndTest(void);
+void	s_rbeginEndTest(void);
+void	s_insertTest(void);
+void	s_sizeTest(void);
+void	s_eraseTest(void);
+void	s_swapTest(void);
+void	s_countFindTest(void);
+void	s_lowerUpperEqualTest(void);
+void	s_keyCompareTest(void);
+void	s_operatorTest(void);
 
 #endif
