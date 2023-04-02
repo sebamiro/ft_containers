@@ -37,8 +37,8 @@ public:
 	typedef size_t							size_type;
 
 
-	RBT(const node_alloc& alloc = node_alloc())
-	: _node_alloc(alloc), _size() {
+	RBT(const Compare& comp, const node_alloc& alloc = node_alloc())
+	: _node_alloc(alloc), _size(), comp(comp) {
 		sentinel_node = _node_alloc.allocate(1);
 		_node_alloc.construct(sentinel_node, node_type(sentinel_node, sentinel_node, sentinel_node, BLACK));
 	}
@@ -67,18 +67,17 @@ public:
 		bool			side = true;
 
 		while (start != sentinel_node) {
-			if (start->value == value)
-				return (ft::make_pair(iterator(start, sentinel_node), false));
-
 			prev = start;
-			if (comp(value, start->value) == false) {
-				side = true;
-				start = start->right;
-			}
-			else {
+			if (comp(value, start->value)) {
 				side = false;
 				start = start->left;
 			}
+			else if (comp(start->value, value)) {
+				side = true;
+				start = start->right;
+			}
+			else
+				return (ft::make_pair(iterator(start, sentinel_node), false));
 		}
 
 		node_pointer	new_node = _node_alloc.allocate(1);
@@ -144,6 +143,12 @@ public:
 	node_pointer
 	base(void) const
 	{ return sentinel_node; }
+
+	void
+	clear(void) {
+		while (sentinel_node->left != sentinel_node)
+			removeNode(sentinel_node->left);
+	}
 
 private:
 
@@ -265,7 +270,6 @@ private:
 		if (node->right->_color == RED) {
 			if (parent->left == node) {
 				node->right->_color = parent->_color;
-				// parent->right = next_node;
 				rotateLeft(node);
 				rotateRight(parent);
 			}
@@ -284,7 +288,6 @@ private:
 			}
 			else {
 				node->left->_color = parent->_color;
-				// parent->left = next_node;
 				rotateRight(node);
 				rotateLeft(parent);
 			}
@@ -293,15 +296,13 @@ private:
 	}
 
 	node_pointer
-	searchFrom(const value_type value, node_pointer root) {
-		while (root != sentinel_node) {
-			if (root->value == value)
-				return root;
-			if (comp(value, root->value))
-				root = root->left;
-			else
-				root = root->right;
-		}
+	searchFrom(const value_type& value, node_pointer root) {
+		if (root == sentinel_node)
+			return root;
+		if (comp(value, root->value) == true)
+			return searchFrom(value, root->left);
+		if (comp(root->value, value) == true)
+			return searchFrom(value, root->right);
 		return root;
 	}
 

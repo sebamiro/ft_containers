@@ -62,18 +62,18 @@ public:
 
 	explicit map(const key_compare& comp = key_compare(),
 					const allocator_type& alloc = allocator_type())
-	: alloc(alloc), comp(comp), rbt() {}
+	: alloc(alloc), comp(comp), rbt(comp) {}
 
 	template <class InputIterator>
 	map(InputIterator first, InputIterator last,
 		const allocator_type& alloc = allocator_type(),
 		const key_compare& comp = key_compare(),
 		typename ft::enable_if<!ft::is_integral_type<InputIterator>::value, InputIterator>::type* = 0)
-	: alloc(alloc), comp(comp), rbt()
+	: alloc(alloc), comp(comp), rbt(comp)
 	{	this->insert(first, last); }
 
 	map(const map& cpy)
-	: alloc(cpy.alloc), comp(cpy.comp), rbt()
+	: alloc(cpy.alloc), comp(cpy.comp), rbt(comp)
 	{ this->insert(cpy.begin(), cpy.end()); }
 
 	~map(void)
@@ -149,7 +149,7 @@ public:
 
 	mapped_type&
 	operator[](const key_type& key)
-	{ return (*((this->insert(make_pair(key,mapped_type()))).first)).second; }
+	{ return (*((this->insert(make_pair(key, mapped_type()))).first)).second; }
 
 	ft::pair<iterator, bool>
 	insert(const value_type& val)
@@ -173,7 +173,7 @@ public:
 
 	void
 	clear(void)
-	{ this->erase(this->begin(), this->end()); }
+	{ this->rbt.clear(); }
 
 	void
 	erase(iterator position)
@@ -274,7 +274,7 @@ private:
 
 	allocator_type					alloc;
 	Compare							comp;
-	RBT<value_type, key_compare>	rbt;
+	RBT<value_type, value_compare>	rbt;
 
 };
 
