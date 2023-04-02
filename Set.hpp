@@ -45,18 +45,18 @@ public:
 
 	explicit set(const key_compare& comp = key_compare(),
 			const allocator_type& alloc = allocator_type())
-	: alloc(alloc), comp(comp), rbt() {}
+	: alloc(alloc), comp(comp), rbt(comp) {}
 
 	template<class InputIterator>
 	set(InputIterator first, InputIterator last,
 		const key_compare& comp = key_compare(),
 		const allocator_type& alloc = allocator_type(),
 		typename ft::enable_if<!ft::is_integral_type<InputIterator>::value, InputIterator>::type* = 0)
-	: alloc(alloc), comp(comp), rbt()
+	: alloc(alloc), comp(comp), rbt(comp)
 	{ this->insert(first, last); }
 
 	set(const set& cpy)
-	: alloc(cpy.alloc), comp(cpy.comp), rbt()
+	: alloc(cpy.alloc), comp(cpy.comp), rbt(comp)
 	{ this->insert(cpy.begin(), cpy.end()); }
 
 	~set(void)
@@ -138,7 +138,7 @@ public:
 
 	void
 	erase(iterator position)
-	{	this->erase((*position)); }
+	{ this->erase((*position)); }
 
 	size_type
 	erase(const value_type& val) {
@@ -156,7 +156,7 @@ public:
 
 	void
 	clear(void)
-	{ this->erase(this->begin(), this->end()); }
+	{ this->rbt.clear(); }
 
 	void
 	swap(set& m) {
@@ -232,7 +232,7 @@ void
 swap(set<Key, Compare, Alloc>& x, set<Key, Compare, Alloc>& y)
 { x.swap(y); }
 
-}
+}//ft namespace
 
 template <class Key, class Compare, class Alloc>
 bool
