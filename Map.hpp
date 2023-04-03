@@ -275,7 +275,7 @@ private:
 
 	allocator_type					alloc;
 	Compare							comp;
-	RBT<value_type, value_compare>	rbt;
+	RBT<value_type, value_compare, allocator_type>	rbt;
 
 };
 

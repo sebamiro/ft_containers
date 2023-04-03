@@ -22,7 +22,7 @@ namespace ft
 {
 
 template < class T, class Compare = ft::less<T>,
-		class Allocator = std::allocator<ft::Node<T> > >
+		class Allocator = std::allocator<T> >
 class	RBT
 {
 
@@ -31,7 +31,7 @@ public:
 	typedef T	value_type;
 	typedef ft::Node<T>	node_type;
 	typedef node_type*	node_pointer;
-	typedef Allocator	node_alloc;
+	typedef typename Allocator::template rebind<Node<T> >::other	node_alloc;
 	typedef ft::RBT_iterator<ft::Node<T> >	iterator;
 	typedef ft::RBT_iterator<ft::Node<T> >	const_iterator;
 	typedef size_t	size_type;
