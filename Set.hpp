@@ -20,27 +20,27 @@ namespace ft
 {
 
 template <class Key, class Compare = ft::less<Key>,
-			class Allocator = std::allocator<Key> >
+		class Allocator = std::allocator<Key> >
 class set
 {
 
 public:
 
-	typedef Key												key_type;
-	typedef key_type										value_type;
-	typedef Compare											key_compare;
-	typedef key_compare										value_compare;
-	typedef Allocator										allocator_type;
-	typedef typename allocator_type::reference				reference;
-	typedef typename allocator_type::const_reference		const_refernece;
-	typedef typename allocator_type::size_type				size_type;
-	typedef typename allocator_type::difference_type		difference_type;
-	typedef typename allocator_type::pointer				pointer;
-	typedef typename allocator_type::const_pointer			const_pointer;
+	typedef Key	key_type;
+	typedef key_type	value_type;
+	typedef Compare	key_compare;
+	typedef key_compare	value_compare;
+	typedef Allocator	allocator_type;
+	typedef typename allocator_type::reference	reference;
+	typedef typename allocator_type::const_reference	const_refernece;
+	typedef typename allocator_type::size_type	size_type;
+	typedef typename allocator_type::difference_type	difference_type;
+	typedef typename allocator_type::pointer	pointer;
+	typedef typename allocator_type::const_pointer	const_pointer;
 
-	typedef typename ft::RBT<value_type>::iterator			iterator;
+	typedef typename ft::RBT<value_type>::iterator	iterator;
 	typedef typename ft::RBT<value_type>::const_iterator	const_iterator;
-	typedef typename ft::reverse_iterator<iterator>			reverse_iterator;
+	typedef typename ft::reverse_iterator<iterator>	reverse_iterator;
 	typedef typename ft::reverse_iterator<const_iterator>	const_reverse_iterator;
 
 	explicit set(const key_compare& comp = key_compare(),
@@ -129,8 +129,8 @@ public:
 	template < class InputIterator>
 	void
 	insert(InputIterator first, InputIterator last,
-			typename ft::enable_if<!ft::is_integral_type<InputIterator>::value,
-			InputIterator>::type* = 0) {
+		typename ft::enable_if<!ft::is_integral_type<InputIterator>::value,
+		InputIterator>::type* = 0) {
 		difference_type	len = ft::distance(first, last);
 		while (len--)
 			this->insert(*(first++));
@@ -221,8 +221,8 @@ public:
 
 private:
 
-	allocator_type					alloc;
-	Compare							comp;
+	allocator_type	alloc;
+	Compare	comp;
 	RBT<value_type, key_compare>	rbt;
 
 };
@@ -237,7 +237,7 @@ swap(set<Key, Compare, Alloc>& x, set<Key, Compare, Alloc>& y)
 template <class Key, class Compare, class Alloc>
 bool
 operator==(const ft::set<Key, Compare, Alloc>& lhs,
-			const ft::set<Key, Compare, Alloc>& rhs) {
+		const ft::set<Key, Compare, Alloc>& rhs) {
 	if ( lhs.size() != rhs.size())
 		return false;
 	return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
@@ -246,32 +246,32 @@ operator==(const ft::set<Key, Compare, Alloc>& lhs,
 template <class Key, class Compare, class Alloc>
 bool
 operator!=(const ft::set<Key, Compare, Alloc>& lhs,
-			const ft::set<Key, Compare, Alloc>& rhs)
+		const ft::set<Key, Compare, Alloc>& rhs)
 { return !(lhs == rhs); }
 
 template <class Key, class Compare, class Alloc>
 bool
 operator<(const	ft::set<Key, Compare, Alloc>& lhs,
-			const ft::set<Key, Compare, Alloc>& rhs)
+		const ft::set<Key, Compare, Alloc>& rhs)
 { return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end()); }
 
 template <class Key, class Compare, class Alloc>
 bool
 operator>(const	ft::set<Key, Compare, Alloc>& lhs,
-			const ft::set<Key, Compare, Alloc>& rhs)
+		const ft::set<Key, Compare, Alloc>& rhs)
 { return rhs < lhs; }
 
 
 template <class Key, class Compare, class Alloc>
 bool
 operator<=(const ft::set<Key, Compare, Alloc>& lhs,
-			const ft::set<Key, Compare, Alloc>& rhs)
+		const ft::set<Key, Compare, Alloc>& rhs)
 { return !(rhs < lhs); }
 
 template <class Key, class Compare, class Alloc>
 bool
 operator>=(const ft::set<Key, Compare, Alloc>& lhs,
-			const ft::set<Key, Compare, Alloc>& rhs)
+		const ft::set<Key, Compare, Alloc>& rhs)
 { return !(lhs < rhs); };
 
 #endif //SET_HPP
