@@ -21,26 +21,25 @@ enum	color {RED, BLACK};
 template <typename T>
 struct Node
 {
-
 	typedef T	value_type;
 
 	Node(void)
 	: value(), parent(nullptr),
-		left(nullptr), right(nullptr), _color(RED) {};
+	left(nullptr), right(nullptr), _color(RED) {};
 
 	Node(Node* parent = nullptr, Node* left = nullptr,
-			Node* right = nullptr, ft::color color = RED)
+		Node* right = nullptr, ft::color color = RED)
 	: value(), parent(parent),
-		left(left), right(right), _color(color) {};
+	left(left), right(right), _color(color) {};
 
 	Node(const value_type& val, Node* parent = nullptr,
-			Node* left = nullptr, Node* right = nullptr, ft::color color = RED)
+		Node* left = nullptr, Node* right = nullptr, ft::color color = RED)
 	: value(val), parent(parent),
-		left(left), right(right), _color(color) {};
+	left(left), right(right), _color(color) {};
 
 	Node(const Node& cpy)
 	: value(cpy.value), parent(cpy.parent),
-		left(cpy.left), right(cpy.right), _color(cpy._color) {};
+	left(cpy.left), right(cpy.right), _color(cpy._color) {};
 
 	Node&
 	operator=(const Node& src) {
@@ -62,10 +61,10 @@ struct Node
 	{ return this->value == rhs.value; }
 
 	value_type	value;
-	Node*		parent;
-	Node*		left;
-	Node*		right;
-	color		_color;
+	Node*	parent;
+	Node*	left;
+	Node*	right;
+	color	_color;
 
 };
 

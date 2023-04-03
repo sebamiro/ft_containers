@@ -22,20 +22,19 @@ namespace ft
 {
 
 template < class T, class Compare = ft::less<T>,
-			class Allocator = std::allocator<ft::Node<T> > >
+		class Allocator = std::allocator<ft::Node<T> > >
 class	RBT
 {
 
 public:
 
-	typedef T								value_type;
-	typedef ft::Node<T>						node_type;
-	typedef node_type *						node_pointer;
-	typedef Allocator						node_alloc;
+	typedef T	value_type;
+	typedef ft::Node<T>	node_type;
+	typedef node_type*	node_pointer;
+	typedef Allocator	node_alloc;
 	typedef ft::RBT_iterator<ft::Node<T> >	iterator;
 	typedef ft::RBT_iterator<ft::Node<T> >	const_iterator;
-	typedef size_t							size_type;
-
+	typedef size_t	size_type;
 
 	RBT(const Compare& comp, const node_alloc& alloc = node_alloc())
 	: _node_alloc(alloc), _size(), comp(comp) {
@@ -64,7 +63,7 @@ public:
 	insert_pair(value_type value) {
 		node_pointer	start = sentinel_node->parent;
 		node_pointer	prev = sentinel_node;
-		bool			side = true;
+		bool	side = true;
 
 		while (start != sentinel_node) {
 			prev = start;
@@ -109,8 +108,8 @@ public:
 	void
 	swap(RBT& x) {
 		node_pointer	temp = x.sentinel_node;
-		Compare			temp_comp = x.comp;
-		size_type		temp_size = x._size;
+		Compare	temp_comp = x.comp;
+		size_type	temp_size = x._size;
 
 		x.sentinel_node = this->sentinel_node;
 		x.comp = this->comp;
@@ -260,7 +259,6 @@ private:
 		node_pointer	parent = node->parent;
 		node_pointer	next_node;
 
-
 		if (sibiling(node) == sentinel_node)
 			next_node = sentinel_node;
 		else if (sibiling(node)->left != sentinel_node)
@@ -402,12 +400,12 @@ private:
 	void
 	insertRotations(node_pointer node) {
 		if (node == node->parent->right
-				&& node->parent == grandParent(node)->left) {
+			&& node->parent == grandParent(node)->left) {
 			rotateLeft(node->parent);
 			node = node->left;
 		}
 		else if (node == node->parent->left
-				&& node->parent == grandParent(node)->right) {
+			&& node->parent == grandParent(node)->right) {
 			rotateRight(node->parent);
 			node = node->right;
 		}
@@ -415,16 +413,18 @@ private:
 		node->parent->_color = BLACK;
 		grandParent(node)->_color = RED;
 
-		if (node == node->parent->left && node->parent == grandParent(node)->left)
+		if (node == node->parent->left
+			&& node->parent == grandParent(node)->left)
 			rotateRight(grandParent(node));
-		else if (node == node->parent->right && node->parent == grandParent(node)->right)
+		else if (node == node->parent->right
+			&& node->parent == grandParent(node)->right)
 			rotateLeft(grandParent(node));
 	}
 
-	node_alloc		_node_alloc;
+	node_alloc	_node_alloc;
 	node_pointer	sentinel_node;
-	Compare			comp;
-	size_type		_size;
+	Compare	comp;
+	size_type	_size;
 };
 
 }//ft namespace
