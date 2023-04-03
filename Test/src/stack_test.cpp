@@ -11,6 +11,10 @@
 /* ************************************************************************** */
 
 #include "defines.hpp"
+#include "Stack.hpp"
+#include <stack>
+#include <vector>
+#include "Vector.hpp"
 
 void	st_constructorTest(void)
 {

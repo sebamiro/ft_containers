@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../inc/defines.hpp"
+#include "defines.hpp"
+#include "Set.hpp"
+#include <set>
 
 void	s_constructorTest(void)
 {

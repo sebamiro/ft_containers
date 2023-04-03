@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "defines.hpp"
+#include "Map.hpp"
+#include <map>
 
 void	m_constructorTest(void)
 {
@@ -224,8 +226,8 @@ void	m_countFindTest(void)
 	g_start = timer();
 	std::cout << "Find |0|: " << (*m.find(0)).first << " - " <<(*m.find(0)).second << std::endl;
 	std::cout << "Find |42|: " << (*m.find(42)).first << " - " <<(*m.find(42)).second << std::endl;
-	std::cout << "Find |-2|: " << (*m.find(-2)).first << " - " <<(*m.find(-2)).second << std::endl;
-	std::cout << "Find |8521412|: " << (*m.find(8521412)).first << " - " <<(*m.find(8521412)).second << std::endl;
+	std::cout << "Find |-2|: " << (*m.find(-2)).first << " -"  << std::endl;
+	std::cout << "Find |8521412|: " << (*m.find(8521412)).first << " -"<< std::endl;
 	g_end = timer();
 	std::cout << "Time: " << 	g_end - g_start << " [MS]" << std::endl;
 }

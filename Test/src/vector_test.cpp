@@ -11,6 +11,8 @@
 /* ************************************************************************** */
 
 #include "defines.hpp"
+#include <vector>
+#include "Vector.hpp"
 
 void	v_constructorTest(void)
 {
@@ -194,7 +196,7 @@ void	v_pushPopTest(void)
 	vector<int>	vec;
 	std::cout << "Pushing 10" << std::endl;
 	g_start = timer();
- 	for (int i = 0; i < 11; i++)
+ 	for (int i = 0; i <= 10; i++)
 	{
 		vec.push_back(i * 42);
 		std::cout << " Back: " << vec.back();
@@ -212,10 +214,10 @@ void	v_pushPopTest(void)
 	std::cout << "{[>===========POP BACK===========<]}" << std::endl;
 	std::cout << "Poping 10" << std::endl;
 	g_start = timer();
- 	for (int i = 0; i < 11; i++)
+ 	for (int i = 0; i <= 10; i++)
 	{
+		std::cout << "Back: " << vec.back() << " ";
 		vec.pop_back();
-		std::cout << "Back: " << vec.back();
 	}
 	std::cout << std::endl;
 	std::cout << "Poping 1000000" << std::endl;

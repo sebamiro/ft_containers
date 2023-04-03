@@ -13,18 +13,10 @@
 #ifndef DEFINES_HPP
 # define DEFINES_HPP
 
-#include "../../Vector.hpp"
-#include "../../Map.hpp"
-#include "../../Stack.hpp"
-#include "../../Set.hpp"
-#include "../../utility.hpp"
-#include <vector>
-#include <set>
-#include <map>
-#include <stack>
-#include <iostream>
+#include "utility.hpp"
 #include <sys/time.h>
 #include <utility>
+#include <iostream>
 
 #ifdef FT
 	using namespace ft;

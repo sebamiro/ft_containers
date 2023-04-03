@@ -15,13 +15,14 @@ MAKE		=	make --no-print-directory
 NAME_STD	=	stdTest
 NAME_FT		=	ftTest
 
+CONTAINERS	= ../
 INC			= inc/
 INC_HEADERS	= $(INC)defines.hpp
 
 SRC_DIR		= src/
 OBJ_DIR		= obj/
 
-CFLAGS		= -I $(INC) -MMD -Wall -Werror -Wextra -std=c++98
+CFLAGS		= -I $(INC) -I $(CONTAINERS) -MMD -Wall -Werror -Wextra -std=c++98
 RM			= rm -f
 CC			= c++
 
