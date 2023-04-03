@@ -25,11 +25,11 @@ class stack
 
 public:
 
-	typedef Container									container_type;
-	typedef typename container_type::value_type			value_type;
-	typedef typename container_type::reference			reference;
+	typedef Container	container_type;
+	typedef typename container_type::value_type	value_type;
+	typedef typename container_type::reference	reference;
 	typedef typename container_type::const_reference	const_reference;
-	typedef typename container_type::size_type			size_type;
+	typedef typename container_type::size_type	size_type;
 
 protected:
 
@@ -77,42 +77,42 @@ public:
 	template <typename value_type, typename container_type>
 	friend bool
 	operator==(const stack<value_type, container_type>& lhs,
-				const stack<value_type, container_type>& rhs){
+			const stack<value_type, container_type>& rhs){
 		return lhs.c == rhs.c;
 	}
 
 	template <typename value_type, typename container_type>
 	friend bool
 	operator!=(const stack<value_type, container_type>& lhs,
-				const stack<value_type, container_type>& rhs){
+			const stack<value_type, container_type>& rhs){
 		return lhs.c != rhs.c;
 	}
 
 	template <typename value_type, typename container_type>
 	friend bool
 	operator>(const stack<value_type, container_type>& lhs,
-				const stack<value_type, container_type>& rhs){
+			const stack<value_type, container_type>& rhs){
 		return lhs.c > rhs.c;
 	}
 
 	template <typename value_type, typename container_type>
 	friend bool
 	operator>=(const stack<value_type, container_type>& lhs,
-				const stack<value_type, container_type>& rhs){
+			const stack<value_type, container_type>& rhs){
 		return lhs.c >= rhs.c;
 	}
 
 	template <typename value_type, typename container_type>
 	friend bool
 	operator<(const stack<value_type, container_type>& lhs,
-				const stack<value_type, container_type>& rhs){
+			const stack<value_type, container_type>& rhs){
 		return lhs.c < rhs.c;
 	}
 
 	template <typename value_type, typename container_type>
 	friend bool
 	operator<=(const stack<value_type, container_type>& lhs,
-				const stack<value_type, container_type>& rhs){
+			const stack<value_type, container_type>& rhs){
 		return lhs.c <= rhs.c;
 	}
 
