@@ -37,7 +37,7 @@ equal(Iterator1 first1, Iterator1 last1, Iterator2 first2) {
 template <class Iterator1, class Iterator2, class BinaryPredicate>
 bool
 equal(Iterator1 first1, Iterator1 last1,
-		Iterator2 first2, BinaryPredicate pred) {
+	Iterator2 first2, BinaryPredicate pred) {
 	while (first1 != last1) {
 		if (!pred(first1, first2))
 			return false;
@@ -50,7 +50,7 @@ equal(Iterator1 first1, Iterator1 last1,
 template <class Iterator1, class Iterator2>
 bool
 lexicographical_compare(Iterator1 first1, Iterator1 last1,
-						Iterator2 first2, Iterator2 last2) {
+					Iterator2 first2, Iterator2 last2) {
 	while (first1 != last1) {
 		if (first2 == last2 || *first2 < *first1)
 			return false;
@@ -64,8 +64,8 @@ lexicographical_compare(Iterator1 first1, Iterator1 last1,
 
 template <class Iterator1, class Iterator2, class Compare>
 bool	lexicographical_compare(Iterator1 first1, Iterator1 last1,
-								Iterator2 first2, Iterator2 last2,
-								Compare comp) {
+							Iterator2 first2, Iterator2 last2,
+							Compare comp) {
 	while (first1 != last1) {
 		if (first2 == last2 || comp(first2, first1))
 			return false;
@@ -113,45 +113,46 @@ pair<T1, T2> make_pair(T1 x, T2 y)
 template <class T1, class T2>
 bool
 operator==(const pair<T1, T2>& lhs,
-			const pair<T1, T2>& rhs)
+		const pair<T1, T2>& rhs)
 { return lhs.first == rhs.first && lhs.second == rhs.second; }
 
 template <class T1, class T2>
 bool
 operator!=(const pair<T1, T2>& lhs,
-			const pair<T1, T2>& rhs)
+		const pair<T1, T2>& rhs)
 { return !(lhs == rhs); }
 
 template <class T1, class T2>
 bool
 operator<(const pair<T1, T2>& lhs,
-			const pair<T1, T2>& rhs)
-{ return lhs.first < rhs.first ||
-		(!(rhs.first < lhs.first) &&
-		lhs.second < rhs.second); }
+		const pair<T1, T2>& rhs){
+	return lhs.first < rhs.first
+	|| (!(rhs.first < lhs.first)
+	&& lhs.second < rhs.second);
+}
 
 template <class T1, class T2>
 bool
 operator<=(const pair<T1, T2>& lhs,
-			const pair<T1, T2>& rhs)
+		const pair<T1, T2>& rhs)
 { return !(rhs < lhs); }
 
 template <class T1, class T2>
 bool
 operator>(const pair<T1, T2>& lhs,
-			const pair<T1, T2>& rhs)
+		const pair<T1, T2>& rhs)
 { return rhs < lhs; }
 
 template <class T1, class T2>
 bool
 operator>=(const pair<T1, T2>& lhs,
-			const pair<T1, T2>& rhs)
+		const pair<T1, T2>& rhs)
 { return !(lhs<rhs); }
 
 template <bool is_integral, typename T>
 struct is_integral_res
 {
-	typedef T type;
+	typedef T	type;
 
 	static const bool value = is_integral;
 	operator type() const
@@ -185,7 +186,7 @@ struct enable_if {};
 
 template <class T>
 struct enable_if<true, T>
-{ typedef T type; };
+{ typedef T	type; };
 
 template <class InputIterator>
 typename ft::iterator_traits<InputIterator>::difference_type
