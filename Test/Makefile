@@ -15,89 +15,78 @@ MAKE		=	make --no-print-directory
 NAME_STD	=	stdTest
 NAME_FT		=	ftTest
 
-CONTAINERS	= ../
-INC			= inc/
-INC_HEADERS	= $(INC)defines.hpp
+CONTAINERS	=	../
+INC			=	inc/
 
-SRC_DIR		= src/
-OBJ_DIR		= obj/
+SRC_DIR		=	src/
 
-CFLAGS		= -I $(INC) -I $(CONTAINERS) -MMD -Wall -Werror -Wextra -std=c++98
-RM			= rm -f
-CC			= c++
+OBJ_DIR		=	obj/
+BIN_DIR		=	bin/
+DEP_DIR		=	dep/
 
-################################################################################
-### COLORS
-################################################################################
+CFLAGS		=	-Wall -Werror -Wextra
+CFLAGS		=	-Wall -Werror -Wextra -std=c++98
+CFLAGS		+=	-MMD -MP -MF $(DEP_DIR)$*.d
 
-DEL_LINE =		\033[2K
-ITALIC =		\033[3m
-BOLD =			\033[1m
-DEF_COLOR =		\033[0;39m
-GRAY =			\033[0;90m
-RED =			\033[0;91m
-GREEN =			\033[0;92m
-YELLOW =		\033[0;93m
-BLUE =			\033[0;94m
-MAGENTA =		\033[0;95m
-CYAN =			\033[0;96m
-WHITE =			\033[0;97m
-BLACK =			\033[0;99m
-ORANGE =		\033[38;5;209m
-BROWN =			\033[38;2;184;143;29m
-DARK_GRAY =		\033[38;5;234m
-MID_GRAY =		\033[38;5;245m
-DARK_GREEN =	\033[38;2;75;179;82m
-DARK_YELLOW =	\033[38;5;143m
+RM			=	rm -rf
+CC			=	c++
+
+COMFLAGS	=	-I $(INC) -I $(CONTAINERS)
 
 ################################################################################
-################################################################################
 
-SRC_FILES	=	map_test.cpp \
-				stack_test.cpp \
-				test.cpp \
-				utilsTest.cpp \
-				vector_test.cpp \
-				set_test.cpp
+SRC_LIST	:=	$(shell find $(SRC_DIR:/=) -type d)
 
-SRC			=	$(addprefix $(SRC_DIR), $(SRC_FILES))
-OBJ 		=	$(addprefix $(OBJ_DIR), $(SRC:.cpp=.o))
-DEP			= 	$(addsuffix .d, $(basename $(OBJ)))
-B_OBJ		=	$(OBJ)
+SRC			:=	$(shell find $(SRC_DIR:/=) -name '*.cpp')
+OBJ 		=	$(patsubst $(SRC_DIR)%, $(OBJ_DIR)%, $(SRC:.cpp=.o))
+DEP 		=	$(patsubst $(SRC_DIR)%, $(DEP_DIR)%, $(SRC:.cpp=.d))
+BIN_STD		=	$(addprefix $(BIN_DIR), $(NAME_STD))
+BIN_FT		=	$(addprefix $(BIN_DIR), $(NAME_FT))
 
-################################################################################
 ################################################################################
 
 all:
-			@$(MAKE) $(NAME_STD)
-			@$(MAKE) $(NAME_FT)
+			@$(MAKE) $(BIN_STD)
+			@$(MAKE) $(BIN_FT)
 
-$(OBJ_DIR)%.o: %.cpp Makefile
-			@mkdir -p $(dir $@)
-			@printf "\r${ORANGE} | $(BROWN)COMPILING ${ORANGE}|  $(BLUE)< ${MAGENTA}$(notdir $(basename $<)) $(BLUE)> $(DEF_COLOR)%20c"
-			@$(CC) $(CFLAGS) -c $< -o $@
+$(OBJ_DIR)%.o: $(SRC_DIR)%.cpp Makefile
+			@echo "compiling.. $(notdir $<)"
+			@$(CC) $(COMFLAGS) $(CFLAGS) -c $< -o $@
 
-$(NAME_STD):	$(OBJ)
+$(BIN_STD):	$(OBJ_DIR) $(DEP_DIR) $(BIN_DIR) $(OBJ)
 			@$(CC) $(CFLAGS) $(OBJ) -o $@
-			@echo "\n\n$(BLUE)[$(ORANGE)============$(BLUE)<|$(ORANGE)DONE$(BLUE)|>$(ORANGE)============$(BLUE)] $(DEF_COLOR)"
+			@echo "$(notdir $@): done"
 
-$(NAME_FT):	$(OBJ)
+$(BIN_FT):	$(OBJ_DIR) $(DEP_DIR) $(BIN_DIR) $(OBJ)
 			@$(CC) $(CFLAGS) -DFT $(OBJ) -o $@
-			@echo "\n\n$(BLUE)[$(ORANGE)============$(BLUE)<|$(ORANGE)DONE$(BLUE)|>$(ORANGE)============$(BLUE)] $(DEF_COLOR)"
+			@echo "$(notdir $@): done"
 
--include $(DEP)
+$(BIN_DIR):
+			@mkdir -p $@
+			@echo "creating.. $@"
+
+$(OBJ_DIR):
+			@mkdir $(patsubst $(SRC_DIR:/=)%, $(@:/=)%, $(SRC_LIST))
+			@echo "creating.. $@"
+
+$(DEP_DIR):
+			@mkdir $(patsubst $(SRC_DIR:/=)%, $(@:/=)%, $(SRC_LIST))
+			@echo "creating.. $@"
+
 
 clean:
-			@$(RM) -r $(OBJ_DIR)
-			@echo "\n${RED}[$(MAGENTA)Objects removed successfully${RED}]$(DEF_COLOR)\n"
+			@$(RM) $(OBJ_DIR) $(DEP_DIR)
+			@echo "removing.. $(OBJ_DIR)"
+			@echo "removing.. $(DEP_DIR)"
 
 fclean:
 			@$(MAKE) clean
-			@$(RM) $(NAME_STD) $(NAME_FT)
-			@echo "\n${RED}[$(MAGENTA)Everything removed successfully${RED}]$(DEF_COLOR)\n"
+			@$(RM) $(BIN_DIR)
+			@echo "removing.. $(BIN_DIR)"
 
 re:
 			@$(MAKE) fclean
 			@$(MAKE)
 
 .PHONY: all clean fclean re
+-include $(DEP)
